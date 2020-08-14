@@ -1,4 +1,5 @@
 using DataLayer.AccessDB;
+using DataLayer.Entities;
 using NUnit.Framework;
 using System.Data;
 using System.Threading.Tasks;
@@ -13,10 +14,11 @@ namespace NUnitTestCoink
         }
 
         [Test]
-        public async Task TestExecuteProcedureAsync()
+        public async Task TestExecuteProcedureQueryAsync()
         {
-            DataTable dtResult = await AccessDataBase.ExecuteProcedureAsync("GetUsers");
-            Assert.IsTrue(dtResult != null);            
+            User user = new User();
+            DataTable dtResult = await AccessDataBase.ExecuteProcedureQueryAsync("GetUsers", user);
+            Assert.IsTrue(dtResult != null);
         }
     }
 }
