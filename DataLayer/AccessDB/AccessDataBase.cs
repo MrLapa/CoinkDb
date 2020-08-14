@@ -16,7 +16,7 @@ namespace DataLayer.AccessDB
 
             return con;
         }
-        public static async Task<DataTable> ExecuteProcedureQueryAsync(string procedureName, object classProperties)
+        public static async Task<DataTable> ExecuteProcedureQueryAsync(string procedureName, object classProperties, string tableName)
         {
             SqlConnection connection = null;
             DataTable dtResult = null;
@@ -31,7 +31,7 @@ namespace DataLayer.AccessDB
                 SqlParameter[] parameters = setParameters(classProperties);
                 cmd.Parameters.AddRange(parameters);
                 SqlDataReader sdr = await cmd.ExecuteReaderAsync();
-                dtResult = new DataTable("User");
+                dtResult = new DataTable(tableName);
                 dtResult.Load(sdr);
             }
             catch (Exception ex)
