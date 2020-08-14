@@ -17,7 +17,7 @@ namespace NUnitTestCoink
         public async Task TestExecuteProcedureQueryAsync()
         {
             User user = new User();
-            DataTable dtResult = await AccessDataBase.ExecuteProcedureQueryAsync("GetUsers", user);
+            DataTable dtResult = await AccessDataBase.ExecuteProcedureQueryAsync("GetUsers", user, "User");
             Assert.IsTrue(dtResult != null);
         }
 
