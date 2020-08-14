@@ -46,6 +46,34 @@ namespace DataLayer.AccessDB
             return dtResult;
         }
 
+        public static async Task<int> ExecuteProcedureInsertAsync(string procedureName, object classProperties)
+        {
+            SqlConnection connection = null;
+            int lastId = 0;
+            try
+            {
+                connection = openConnection();
+                SqlCommand cmd = new SqlCommand(procedureName)
+                {
+                    Connection = connection,
+                    CommandType = CommandType.StoredProcedure
+                };
+                SqlParameter[] parameters = setParameters(classProperties);
+                cmd.Parameters.AddRange(parameters);
+                lastId = (int)await cmd.ExecuteScalarAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return lastId;
+        }
+
         private static SqlParameter[] setParameters<T>(T classProperties)
         {
             var properties = classProperties.GetType().GetProperties();

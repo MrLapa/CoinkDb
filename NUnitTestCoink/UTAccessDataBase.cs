@@ -20,5 +20,19 @@ namespace NUnitTestCoink
             DataTable dtResult = await AccessDataBase.ExecuteProcedureQueryAsync("GetUsers", user);
             Assert.IsTrue(dtResult != null);
         }
+
+        [Test]
+        public async Task TestExecuteProcedureInsertAsync()
+        {
+            User user = new User
+            {
+                Name = "Maria Aristizabal",
+                Phone = "0800-222-2676",
+                Address = "Estadio La Bombonera",
+                CityId = 2,
+            };
+            int lastId = await AccessDataBase.ExecuteProcedureInsertAsync("AddUser", user);
+            Assert.IsTrue(lastId > 0);
+        }
     }
 }
